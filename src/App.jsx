@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react';
+import DisplayLyrics from './components/DisplayLyrics';
+import SongButton from './components/SongButton';
+import SearchForm from './components/SearchForm';
+import { fetchSongData } from './services/api';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [lyrics, setLyrics] = useState('');
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [showSearch, setShowSearch] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSearch = async (artist, title) => {
+    try {
+      const data = await fetchSongData(artist, title);
+      setLyrics(data.lyrics);
+      setSelectedSong({ artist, title });
+      setError(''); // Clear any previous error
+    } catch (error) {
+      console.error(error);
+      setLyrics('');
+      setSelectedSong(null);
+      setError('Error fetching lyrics. Please check the artist and song title.');
+    }
+  };
+
+  const songs = [
+    { artist: 'NF', title: 'The Search', image: '/nf.jpg' },
+    { artist: 'Jon Bellion', title: 'Irobot', image: '/irobot.jpg' },
+    { artist: 'Twenty One Pilots', title: 'Stressed Out', image: '/stress.jpeg' },
+    { artist: 'James Brown', title: 'I Feel Good', image: '/good.jpeg' },
+    // Add more songs as needed
+  ];
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container">
+      <button className="search-button" onClick={() => setShowSearch(!showSearch)}>
+        Search
+      </button>
+      {showSearch && <SearchForm onSearch={handleSearch} />}
+      <h1>Feeling the mood</h1>
+      {error && <div className="error-message">{error}</div>}
+      <div className="song-buttons">
+        {songs.map((song, index) => (
+          <SongButton key={index} song={song} onClick={handleSearch} />
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      {selectedSong && (
+        <div>
+          <h2>{selectedSong.title} by {selectedSong.artist}</h2>
+          <img src={selectedSong.image} alt={`${selectedSong.title} cover`} />
+          <DisplayLyrics lyrics={lyrics} />
+        </div>
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;
