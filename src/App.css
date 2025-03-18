@@ -1,6 +1,6 @@
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1); 
   margin: 0;
   padding: 0;
   display: flex;
@@ -10,10 +10,10 @@ body {
 }
 
 .container {
-  background-color: #fff;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1); 
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
   width: 600px;
   text-align: center;
   position: relative;
@@ -24,7 +24,7 @@ body {
   top: 10px;
   left: 10px;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #6b9c8a; /* Match the color scheme */
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -32,7 +32,7 @@ body {
 }
 
 .search-button:hover {
-  background-color: #0056b3;
+  background-color: #8cae7a; /* Slightly lighter shade for hover effect */
 }
 
 .search-form {
@@ -50,15 +50,15 @@ body {
 
 .search-form button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #6b9c8a; /* Match the color scheme */
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-search-form button:hover {
-  background-color: #0056b3;
+.search-form button:hover {
+  background-color: #8cae7a; /* Slightly lighter shade for hover effect */
 }
 
 h1 {
