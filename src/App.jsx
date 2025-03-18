@@ -9,6 +9,7 @@ const App = () => {
   const [lyrics, setLyrics] = useState('');
   const [selectedSong, setSelectedSong] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [showLyrics, setShowLyrics] = useState(false);
   const [error, setError] = useState('');
 
   const handleSearch = async (artist, title) => {
@@ -17,6 +18,8 @@ const App = () => {
       setLyrics(data.lyrics);
       setSelectedSong({ artist, title });
       setError(''); // Clear any previous error
+      setShowSearch(false); // Close the search modal
+      setShowLyrics(true); // Open the lyrics modal
     } catch (error) {
       console.error(error);
       setLyrics('');
@@ -35,10 +38,26 @@ const App = () => {
 
   return (
     <div className="container">
-      <button className="search-button" onClick={() => setShowSearch(!showSearch)}>
+      <button className="search-button" onClick={() => setShowSearch(true)}>
         Search
       </button>
-      {showSearch && <SearchForm onSearch={handleSearch} />}
+      {showSearch && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowSearch(false)}>&times;</span>
+            <SearchForm onSearch={handleSearch} />
+          </div>
+        </div>
+      )}
+      {showLyrics && selectedSong && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowLyrics(false)}>&times;</span>
+            <h2>{selectedSong.title} by {selectedSong.artist}</h2>
+            <DisplayLyrics lyrics={lyrics} />
+          </div>
+        </div>
+      )}
       <h1>Feeling the mood</h1>
       {error && <div className="error-message">{error}</div>}
       <div className="song-buttons">
@@ -46,13 +65,6 @@ const App = () => {
           <SongButton key={index} song={song} onClick={handleSearch} />
         ))}
       </div>
-      {selectedSong && (
-        <div>
-          <h2>{selectedSong.title} by {selectedSong.artist}</h2>
-          <img src={selectedSong.image} alt={`${selectedSong.title} cover`} />
-          <DisplayLyrics lyrics={lyrics} />
-        </div>
-      )}
     </div>
   );
 };

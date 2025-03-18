@@ -7,16 +7,18 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
+  overflow: hidden;
 }
 
 .container {
-  background: linear-gradient(135deg, #a8e6cf, #dcedc1); 
+  background: rgba(107, 156, 138, 0.8);
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   width: 600px;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 
 .search-button {
@@ -24,7 +26,7 @@ body {
   top: 10px;
   left: 10px;
   padding: 10px;
-  background-color: #6b9c8a; /* Match the color scheme */
+  background-color: #6b9c8a;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -32,11 +34,49 @@ body {
 }
 
 .search-button:hover {
-  background-color: #8cae7a; /* Slightly lighter shade for hover effect */
+  background-color: #8cae7a; 
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #a8e6cf;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .search-form {
-  margin-top: 50px; /* Add margin-top to increase the distance */
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -50,7 +90,7 @@ body {
 
 .search-form button {
   padding: 10px;
-  background-color: #6b9c8a; /* Match the color scheme */
+  background-color: #6b9c8a; 
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -58,7 +98,7 @@ body {
 }
 
 .search-form button:hover {
-  background-color: #8cae7a; /* Slightly lighter shade for hover effect */
+  background-color: #8cae7a;
 }
 
 h1 {
@@ -100,8 +140,15 @@ h1 {
   margin: 5px 0;
 }
 
-pre {
-  text-align: left;
+.lyrics-container {
+  height: 300px;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.lyrics-container pre {
+  font-family: Helvetica, Arial, sans-serif;
   white-space: pre-wrap;
   word-wrap: break-word;
+  margin: 0;
 }
