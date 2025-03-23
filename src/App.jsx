@@ -24,7 +24,7 @@ const App = () => {
       setYoutubeVideoId(''); // Clear previous video ID
 
       // Fetch YouTube video ID
-      const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(artist)} ${encodeURIComponent(title)}&key=${import.meta.env.VITE_REACT_APP_music}`);
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(artist)} ${encodeURIComponent(title)}&key=${import.meta.env.APP_music}`);
       if (!response.ok) {
         throw new Error('Failed to fetch video');
       }
