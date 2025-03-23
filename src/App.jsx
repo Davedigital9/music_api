@@ -5,12 +5,14 @@ import SearchForm from './components/SearchForm';
 import { fetchSongData } from './services/api';
 import './App.css';
 
+
 const App = () => {
   const [lyrics, setLyrics] = useState('');
   const [selectedSong, setSelectedSong] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
   const [showLyrics, setShowLyrics] = useState(false);
   const [error, setError] = useState('');
+  const [youtubeVideoId, setYoutubeVideoId] = useState('');
 
   const handleSearch = async (artist, title) => {
     try {
@@ -20,11 +22,24 @@ const App = () => {
       setError(''); // Clear any previous error
       setShowSearch(false); // Close the search modal
       setShowLyrics(true); // Open the lyrics modal
+      setYoutubeVideoId(''); // Clear previous video ID
+
+      // Fetch YouTube video ID
+      const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(artist)} ${encodeURIComponent(title)}&key=${import.meta.env.VITE_REACT_APP_musicKey}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch video');
+      }
+      const result = await response.json();
+      if (result.items && result.items.length > 0) {
+        setYoutubeVideoId(result.items[0].id.videoId);
+      } else {
+        setError('No video found for this song.');
+      }
     } catch (error) {
       console.error(error);
       setLyrics('');
       setSelectedSong(null);
-      setError('Error fetching lyrics. Please check the artist and song title.');
+      setError('Error fetching lyrics or video. Please check the artist and song title.');
     }
   };
 
@@ -53,8 +68,24 @@ const App = () => {
         <div className="modal">
           <div className="modal-content">
             <span className="close" onClick={() => setShowLyrics(false)}>&times;</span>
-            <h2>{selectedSong.title} by {selectedSong.artist}</h2>
-            <DisplayLyrics lyrics={lyrics} />
+            <div className="content-wrapper">
+              <h2>{selectedSong.title} by {selectedSong.artist}</h2>
+              <div className="lyrics">
+                <DisplayLyrics lyrics={lyrics} />
+              </div>
+            </div>
+            <div className="video">
+              {youtubeVideoId && (
+                <iframe
+                  width="100%"
+                  height="315"
+                  src={`https://www.youtube.com/embed/${youtubeVideoId}`}
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
           </div>
         </div>
       )}

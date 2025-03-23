@@ -54,13 +54,46 @@ body {
 }
 
 .modal-content {
-  background-color: #a8e6cf;
+  width: 80%; 
+  max-width: 1000px; 
   margin: auto;
   padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 8px;
+  background: linear-gradient(135deg, #a8e6cf, #dcedc1); 
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: row; /* Change to row for side-by-side layout */
+  justify-content: space-between;
+}
+
+.modal-content h2 {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-content .content-wrapper {
+  display: flex;
+  flex-direction: column; /* Change to column for better alignment */
+  width: 48%;
+}
+
+.modal-content .lyrics {
+  padding: 10px;
+  overflow-y: auto; /* Add scroll for overflow */
+  max-height: 500px; /* Set a max height */
+}
+
+.modal-content .video {
+  width: 48%; /* Adjust width for video */
+  padding: 10px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
 }
 
 .close {
@@ -80,6 +113,7 @@ body {
 .search-form {
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: 300px;
 }
 
 .search-form input {
@@ -88,6 +122,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 4px;
   width: calc(100% - 22px);
+  
 }
 
 .search-form button {
@@ -164,6 +199,7 @@ h1 {
   .modal-content {
     width: 90%;
     max-width: 90%;
+    flex-direction: column; /* Change to column for mobile view */
   }
 
   .search-button {
