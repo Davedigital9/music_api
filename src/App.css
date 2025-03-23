@@ -199,7 +199,20 @@ h1 {
   .modal-content {
     width: 90%;
     max-width: 90%;
-    flex-direction: column; /* Change to column for mobile view */
+    flex-direction: column-reverse; /* Change to column for mobile view and reversed to make the order change */
+  }
+
+  .modal-content .video {
+    width: 100%;
+  }
+
+  .modal-content .content-wrapper {
+    width: 100%;
+  }
+
+  .modal-content .lyrics-container,
+  .modal-content h2 { 
+    align-items: center;
   }
 
   .search-button {
